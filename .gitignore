@@ -7,3 +7,5 @@ ClientBin
 *.user
 *.[Cc]ache
 *.shfbproj_*
+Src/.vs/*
+Src/UpgradeLog.htm

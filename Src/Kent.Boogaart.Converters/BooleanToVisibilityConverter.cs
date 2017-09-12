@@ -1,24 +1,29 @@
-﻿namespace Kent.Boogaart.Converters
-{
-    using System;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
+﻿using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
 
+namespace Kent.Boogaart.Converters
+{
     /// <summary>
-    /// An implementation of <see cref="IValueConverter"/> that converts boolean values to <see cref="Visibility"/> values.
+    /// An implementation of <see cref="IValueConverter"/> that converts boolean values to <see cref="Visibility"/> 
+    /// values.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The <c>BooleanToVisibilityConverter</c> class can be used to convert boolean values (or values that can be converted to boolean values) to
-    /// <see cref="Visibility"/> values. By default, <see langword="true"/> is converted to <see cref="Visibility.Visible"/> and <see langword="false"/>
-    /// is converted to <see cref="Visibility.Collapsed"/>. However, the <see cref="UseHidden"/> property can be set to <see langword="true"/> in order
-    /// to return <see cref="Visibility.Hidden"/> instead of <see cref="Visibility.Collapsed"/>. In addition, the <see cref="IsReversed"/> property
-    /// can be set to <see langword="true"/> to reverse the returned values.
+    /// The <c>BooleanToVisibilityConverter</c> class can be used to convert boolean values (or values that can be 
+    /// converted to boolean values) to <see cref="Visibility"/> values. By default, <see langword="true"/> is 
+    /// converted to <see cref="Visibility.Visible"/> and <see langword="false"/> is converted to 
+    /// <see cref="Visibility.Collapsed"/>. However, the <see cref="UseHidden"/> property can be set to 
+    /// <see langword="true"/> in order to return <see cref="Visibility.Hidden"/> instead of 
+    /// <see cref="Visibility.Collapsed"/>. In addition, the <see cref="IsReversed"/> property can be set to 
+    /// <see langword="true"/> to reverse the returned values.
     /// </para>
     /// </remarks>
     /// <example>
-    /// The following example shows how a <c>BooleanToVisibilityConverter</c> can be used to display a <c>TextBox</c> only when a property is <c>true</c>:
+    /// The following example shows how a <c>BooleanToVisibilityConverter</c> can be used to display a <c>TextBox</c> 
+    /// only when a property is 
+    /// <c>true</c>:
     /// <code lang="xml">
     /// <![CDATA[
     /// <TextBox Visibility="{Binding ShowTheTextBox, Converter={BooleanToVisibilityConverter}}"/>
@@ -26,24 +31,51 @@
     /// </code>
     /// </example>
     /// <example>
-    /// The following example shows how a <c>BooleanToVisibilityConverter</c> can be used to display a <c>TextBox</c> only when a property is <c>true</c>.
-    /// Rather than collapsing the <c>TextBox</c>, it is hidden:
+    /// The following example shows how a <c>BooleanToVisibilityConverter</c> can be used to display a <c>TextBox</c> 
+    /// only when a property is <c>true</c>. Rather than collapsing the <c>TextBox</c>, it is hidden:
     /// <code lang="xml">
     /// <![CDATA[
     /// <TextBox Visibility="{Binding ShowTheTextBox, Converter={BooleanToVisibilityConverter UseHidden=true}}"/>
     /// ]]>
     /// </code>
     /// </example>
-#if !SILVERLIGHT
     [ValueConversion(typeof(bool), typeof(Visibility))]
-#endif
     public class BooleanToVisibilityConverter : IValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// true if the condition is reversed.
+        /// </summary>
         private bool isReversed;
-#if !SILVERLIGHT
-        private bool useHidden;
-#endif
 
+        /// <summary>
+        /// true to use <see cref="Visibility.Hidden"/> instead of <see cref="Visibility.Collapsed"/>.
+        /// </summary>
+        private bool useHidden;
+        #endregion
+        #region Properties
+        /// <summary>
+        /// Gets or sets a value indicating whether the return values should 
+        /// be reversed.
+        /// </summary>
+        public bool IsReversed
+        {
+            get { return this.isReversed; }
+            set { this.isReversed = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether <see cref="Visibility.Hidden"/> should be returned instead of 
+        /// <see cref="Visibility.Collapsed"/>.
+        /// </summary>
+        public bool UseHidden
+        {
+            get { return this.useHidden; }
+            set { this.useHidden = value; }
+        }
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the BooleanToVisibilityConverter class.
         /// </summary>
@@ -51,7 +83,6 @@
         {
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Initializes a new instance of the BooleanToVisibilityConverter class.
         /// </summary>
@@ -66,28 +97,9 @@
             this.isReversed = isReversed;
             this.useHidden = useHidden;
         }
-#endif
+        #endregion
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the return values should be reversed.
-        /// </summary>
-        public bool IsReversed
-        {
-            get { return this.isReversed; }
-            set { this.isReversed = value; }
-        }
-
-#if !SILVERLIGHT
-        /// <summary>
-        /// Gets or sets a value indicating whether <see cref="Visibility.Hidden"/> should be returned instead of <see cref="Visibility.Collapsed"/>.
-        /// </summary>
-        public bool UseHidden
-        {
-            get { return this.useHidden; }
-            set { this.useHidden = value; }
-        }
-#endif
-
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified value.
         /// </summary>
@@ -110,21 +122,10 @@
         {
             var val = System.Convert.ToBoolean(value, CultureInfo.InvariantCulture);
 
-            if (this.IsReversed)
-            {
-                val = !val;
-            }
+            if (this.IsReversed) val = !val;
+            if (val) return Visibility.Visible;
 
-            if (val)
-            {
-                return Visibility.Visible;
-            }
-
-#if !SILVERLIGHT
             return this.UseHidden ? Visibility.Hidden : Visibility.Collapsed;
-#else
-            return Visibility.Collapsed;
-#endif
         }
 
         /// <summary>
@@ -147,20 +148,15 @@
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Visibility))
-            {
-                return DependencyProperty.UnsetValue;
-            }
+            if (!(value is Visibility)) return DependencyProperty.UnsetValue;
 
             var visibility = (Visibility)value;
             var result = visibility == Visibility.Visible;
 
-            if (this.IsReversed)
-            {
-                result = !result;
-            }
+            if (this.IsReversed) result = !result;
 
             return result;
         }
+        #endregion
     }
 }
