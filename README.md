@@ -31,10 +31,10 @@ Please see [the documentation](Doc/overview.md) for more details. The source cod
 ## Who?
 
 **WPF Converters** was created by [Kent Boogaart](http://kent-boogaart.com).
+This branch is updated by stefv.
 
 ## Primary Features
 
 * WPF 3.5/4.0/4.5 support
-* Silverlight 4.0 and 5.0 support
 * Extensively unit tested
 * Many converters including `ExpressionConverter`, which allows arbitrary C# expressions to be applied to bound values, and `MapConverter`, which maps input values to corresponding outputs.
