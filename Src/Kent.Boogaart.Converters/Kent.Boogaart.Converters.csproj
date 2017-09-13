@@ -180,7 +180,6 @@
     </Compile>
     <Compile Include="BooleanToVisibilityConverter.cs" />
     <Compile Include="CaseConverter.cs" />
-    <Compile Include="CharacterCasing.cs" />
     <Compile Include="ConverterGroup.cs" />
     <Compile Include="DateTimeConversionMode.cs" />
     <Compile Include="DateTimeConverter.cs" />
