@@ -1,21 +1,22 @@
+using Kent.Boogaart.HelperTrinity.Extensions;
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Markup;
+
 namespace Kent.Boogaart.Converters
 {
-    using Kent.Boogaart.HelperTrinity.Extensions;
-    using System;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that converts the casing of the input string.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The <c>CaseConverter</c> class can be used to convert input strings into upper or lower case according to the <see cref="Casing"/> property.
-    /// Setting <see cref="Casing"/> is a shortcut for setting both <see cref="SourceCasing"/> and <see cref="TargetCasing"/>. It is therefore possible
-    /// to specify that the source and target properties be converted to different casings.
+    /// The <c>CaseConverter</c> class can be used to convert input strings into upper or lower case according 
+    /// to the <see cref="Casing"/> property. Setting <see cref="Casing"/> is a shortcut for setting both 
+    /// <see cref="SourceCasing"/> and <see cref="TargetCasing"/>. It is therefore possible to specify that the 
+    /// source and target properties be converted to different casings.
     /// </para>
     /// </remarks>
     /// <example>
@@ -27,21 +28,81 @@ namespace Kent.Boogaart.Converters
     /// </code>
     /// </example>
     /// <example>
-    /// The following example shows how a <c>CaseConverter</c> can be used to convert a bound value to upper-case, but display it in lower-case:
+    /// The following example shows how a <c>CaseConverter</c> can be used to convert a bound value to upper-case, 
+    /// but display it in lower-case:
     /// <code lang="xml">
     /// <![CDATA[
     /// <Label Content="{Binding Name, Converter={CaseConverter SourceCasing=Upper, TargetCasing=Lower}}"/>
     /// ]]>
     /// </code>
     /// </example>
-#if !SILVERLIGHT
     [ValueConversion(typeof(string), typeof(string))]
-#endif
     public class CaseConverter : IValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// Source casing.
+        /// </summary>
         private CharacterCasing sourceCasing;
-        private CharacterCasing targetCasing;
 
+        /// <summary>
+        /// Tagrte casing.
+        /// </summary>
+        private CharacterCasing targetCasing;
+        #endregion
+        #region Properties
+        /// <summary>
+        /// Gets or sets the source casing for the converter.
+        /// </summary>
+        [ConstructorArgument("sourceCasing")]
+        public CharacterCasing SourceCasing
+        {
+            get
+            {
+                return this.sourceCasing;
+            }
+
+            set
+            {
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                this.sourceCasing = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the target casing for the converter.
+        /// </summary>
+        [ConstructorArgument("targetCasing")]
+        public CharacterCasing TargetCasing
+        {
+            get
+            {
+                return this.targetCasing;
+            }
+
+            set
+            {
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                this.targetCasing = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets both the source and target casings for the converter.
+        /// </summary>
+        [ConstructorArgument("casing")]
+        public CharacterCasing Casing
+        {
+            set
+            {
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                this.sourceCasing = value;
+                this.targetCasing = value;
+            }
+        }
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the CaseConverter class.
         /// </summary>
@@ -74,63 +135,8 @@ namespace Kent.Boogaart.Converters
             this.SourceCasing = sourceCasing;
             this.TargetCasing = targetCasing;
         }
-
-        /// <summary>
-        /// Gets or sets the source casing for the converter.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("sourceCasing")]
-#endif
-        public CharacterCasing SourceCasing
-        {
-            get
-            {
-                return this.sourceCasing;
-            }
-
-            set
-            {
-                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
-                this.sourceCasing = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the target casing for the converter.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("targetCasing")]
-#endif
-        public CharacterCasing TargetCasing
-        {
-            get
-            {
-                return this.targetCasing;
-            }
-
-            set
-            {
-                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
-                this.targetCasing = value;
-            }
-        }
-
-        /// <summary>
-        /// Sets both the source and target casings for the converter.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("casing")]
-#endif
-        public CharacterCasing Casing
-        {
-            set
-            {
-                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
-                this.sourceCasing = value;
-                this.targetCasing = value;
-            }
-        }
-
+        #endregion
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified value.
         /// </summary>
@@ -210,5 +216,6 @@ namespace Kent.Boogaart.Converters
 
             return DependencyProperty.UnsetValue;
         }
+        #endregion
     }
 }
