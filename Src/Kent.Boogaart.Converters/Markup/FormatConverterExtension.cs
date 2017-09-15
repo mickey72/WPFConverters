@@ -1,11 +1,9 @@
-﻿#if !SILVERLIGHT40
+﻿using Kent.Boogaart.HelperTrinity;
+using System;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-    using Kent.Boogaart.HelperTrinity;
-    using System;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="FormatConverter"/> to be easily created.
     /// </summary>
@@ -47,9 +45,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the format string for the <see cref="FormatConverter"/>.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("formatString")]
-#endif
         public string FormatString
         {
             get { return this.formatString; }
@@ -72,5 +68,3 @@ namespace Kent.Boogaart.Converters.Markup
         }
     }
 }
-
-#endif

@@ -1,11 +1,9 @@
-﻿#if !SILVERLIGHT40
+﻿using Kent.Boogaart.HelperTrinity;
+using System;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-    using Kent.Boogaart.HelperTrinity;
-    using System;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="ExpressionConverter"/> to be easily created.
     /// See <see cref="ExpressionConverter"/> for more information on supported expressions.
@@ -48,9 +46,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the expression to use in the <see cref="ExpressionConverter"/>.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("expression")]
-#endif
         public string Expression
         {
             get { return this.expression; }
@@ -73,5 +69,3 @@ namespace Kent.Boogaart.Converters.Markup
         }
     }
 }
-
-#endif

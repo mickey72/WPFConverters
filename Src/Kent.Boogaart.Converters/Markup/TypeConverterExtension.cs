@@ -1,10 +1,8 @@
-﻿#if !SILVERLIGHT
+﻿using System;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-    using System;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="TypeConverter"/> to be easily created.
     /// </summary>
@@ -134,5 +132,3 @@ namespace Kent.Boogaart.Converters.Markup
         }
     }
 }
-
-#endif

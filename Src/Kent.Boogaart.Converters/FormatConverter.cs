@@ -1,26 +1,26 @@
+using Kent.Boogaart.HelperTrinity;
+using Kent.Boogaart.HelperTrinity.Extensions;
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
+
 namespace Kent.Boogaart.Converters
 {
-    using Kent.Boogaart.HelperTrinity;
-    using Kent.Boogaart.HelperTrinity.Extensions;
-    using System;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
-    /// An implementation of <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> that formats any bound data with a specified
-    /// <see cref="FormatString"/>.
+    /// An implementation of <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> that formats any bound data with a 
+    /// specified <see cref="FormatString"/>.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The <c>FormatConverter</c> class can be used to format bound data according to standard .NET formatting rules. It implements both the
-    /// <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> interfaces, thus enabling usage in both <c>Binding</c>s and
-    /// <c>MultiBinding</c>s.
+    /// The <c>FormatConverter</c> class can be used to format bound data according to standard .NET formatting rules. It implements 
+    /// both the <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> interfaces, thus enabling usage in both 
+    /// <c>Binding</c>s and <c>MultiBinding</c>s.
     /// </para>
     /// <para>
-    /// Note that this converter does not support conversions back for its <see cref="IMultiValueConverter"/> implementation. Any attempt to
-    /// convert multiple values back will return <see langword="null"/>.
+    /// Note that this converter does not support conversions back for its <see cref="IMultiValueConverter"/> implementation. Any attempt 
+    /// to convert multiple values back will return <see langword="null"/>.
     /// </para>
     /// </remarks>
     /// <example>
@@ -47,17 +47,33 @@ namespace Kent.Boogaart.Converters
     /// </code>
     /// </example>
     [ContentProperty("FormatString")]
-#if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(string))]
-#endif
-    public class FormatConverter : IValueConverter
-#if !SILVERLIGHT
-, IMultiValueConverter
-#endif
+    public class FormatConverter : IValueConverter, IMultiValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// Exception helper.
+        /// </summary>
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(FormatConverter));
-        private string formatString;
 
+        /// <summary>
+        /// Format string.
+        /// </summary>
+        private string formatString;
+        #endregion
+        #region Properties
+        /// <summary>
+        /// Gets or sets the format string to use when converting bound data.
+        /// </summary>
+        [ConstructorArgument("formatString")]
+        public string FormatString
+        {
+            get { return this.formatString; }
+            set { this.formatString = value; }
+        }
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the FormatConverter class.
         /// </summary>
@@ -75,19 +91,9 @@ namespace Kent.Boogaart.Converters
         {
             this.FormatString = formatString;
         }
+        #endregion
 
-        /// <summary>
-        /// Gets or sets the format string to use when converting bound data.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("formatString")]
-#endif
-        public string FormatString
-        {
-            get { return this.formatString; }
-            set { this.formatString = value; }
-        }
-
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified value.
         /// </summary>
@@ -144,7 +150,6 @@ namespace Kent.Boogaart.Converters
             }
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Attempts to convert the specified values.
         /// </summary>
@@ -191,6 +196,6 @@ namespace Kent.Boogaart.Converters
         {
             return null;
         }
-#endif
+        #endregion
     }
 }

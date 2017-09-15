@@ -1,27 +1,22 @@
-#if !SILVERLIGHT
+using System.Collections.ObjectModel;
+using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters
 {
-    using System.Collections.ObjectModel;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Represents a single step in a <see cref="MultiConverterGroup"/>.
     /// </summary>
     [ContentProperty("Converters")]
     public class MultiConverterGroupStep
     {
-        private readonly Collection<IMultiValueConverter> converters;
-
+        #region Fields
         /// <summary>
-        /// Initializes a new instance of the MultiConverterGroupStep class.
+        /// Converters.
         /// </summary>
-        public MultiConverterGroupStep()
-        {
-            this.converters = new Collection<IMultiValueConverter>();
-        }
-
+        private readonly Collection<IMultiValueConverter> converters;
+        #endregion
+        #region Properties
         /// <summary>
         /// Gets the collection of <see cref="IMultiValueConverter"/>s in this <c>MultiConverterGroupStep</c>.
         /// </summary>
@@ -29,7 +24,16 @@ namespace Kent.Boogaart.Converters
         {
             get { return this.converters; }
         }
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the MultiConverterGroupStep class.
+        /// </summary>
+        public MultiConverterGroupStep()
+        {
+            this.converters = new Collection<IMultiValueConverter>();
+        }
+        #endregion
     }
 }
-
-#endif

@@ -1,7 +1,7 @@
+using System.Windows.Markup;
+
 namespace Kent.Boogaart.Converters
 {
-    using System.Windows.Markup;
-
     /// <summary>
     /// Represents a mapping <see cref="From"/> one value <see cref="To"/> another.
     /// </summary>
@@ -40,9 +40,7 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Gets or sets the source object for the mapping.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("from")]
-#endif
         public object From
         {
             get { return this.from; }
@@ -52,9 +50,7 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Gets or sets the destination object for the mapping.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("to")]
-#endif
         public object To
         {
             get { return this.to; }

@@ -1,40 +1,39 @@
-#if !SILVERLIGHT
+using Kent.Boogaart.HelperTrinity;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters
 {
-    using Kent.Boogaart.HelperTrinity;
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
-    /// An implementation of <see cref="IMultiValueConverter"/> that allows multiple <see cref="IMultiValueConverter"/>s to be chained together in
-    /// a sequence of steps.
+    /// An implementation of <see cref="IMultiValueConverter"/> that allows multiple <see cref="IMultiValueConverter"/>s to be chained 
+    /// together in a sequence of steps.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The <c>MultiConverterGroup</c> class allows <see cref="IMultiValueConverter"/> implementations to be chained together in various steps to
-    /// produce an execution pipeline. Each step in the execution chain is represented by an instance of <see cref="MultiConverterGroupStep"/>,
-    /// which must be added to the <see cref="Steps"/> collection.
+    /// The <c>MultiConverterGroup</c> class allows <see cref="IMultiValueConverter"/> implementations to be chained together in various 
+    /// steps to produce an execution pipeline. Each step in the execution chain is represented by an instance of 
+    /// <see cref="MultiConverterGroupStep"/>, which must be added to the <see cref="Steps"/> collection.
     /// </para>
     /// <para>
-    /// During a call to <see cref="Convert"/>, each step is handed a set of values. Each converter in that step is required to produce one value
-    /// from the set of values. All values produced by the converters in a step are combined and form the input to the next step.
+    /// During a call to <see cref="Convert"/>, each step is handed a set of values. Each converter in that step is required to produce 
+    /// one value from the set of values. All values produced by the converters in a step are combined and form the input to the next step.
     /// </para>
     /// <para>
-    /// During a call to <see cref="ConvertBack"/>, the steps are traversed in reverse order. Only the first converter in each step is used, since
-    /// each converter in the step should map a single input value back to the same output values. The output values from the single converter in
-    /// each step are fed as input into the previous step all the way up the stack. Of course, if any of the first converters in any of the steps
-    /// do not support backward conversions, calling <see cref="ConvertBack"/> will not yield the desired results.
+    /// During a call to <see cref="ConvertBack"/>, the steps are traversed in reverse order. Only the first converter in each step is 
+    /// used, since each converter in the step should map a single input value back to the same output values. The output values from 
+    /// the single converter in each step are fed as input into the previous step all the way up the stack. Of course, if any of the first 
+    /// converters in any of the steps do not support backward conversions, calling <see cref="ConvertBack"/> will not yield the desired 
+    /// results.
     /// </para>
     /// <para>
-    /// Note that the final step in a <c>MultiConverterGroup</c> must have a single <see cref="IMultiValueConverter"/> instance added to it. In
-    /// addition, all steps in a <c>MultiConverterGroup</c> must have at least one converter added to them. Violating either of these constraints
-    /// will result in an exception at runtime.
+    /// Note that the final step in a <c>MultiConverterGroup</c> must have a single <see cref="IMultiValueConverter"/> instance added 
+    /// to it. In addition, all steps in a <c>MultiConverterGroup</c> must have at least one converter added to them. Violating either of 
+    /// these constraints will result in an exception at runtime.
     /// </para>
     /// </remarks>
     /// <example>
@@ -58,17 +57,18 @@ namespace Kent.Boogaart.Converters
     [ValueConversion(typeof(object), typeof(object))]
     public class MultiConverterGroup : IMultiValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// Exception helper.
+        /// </summary>
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(MultiConverterGroup));
-        private readonly Collection<MultiConverterGroupStep> steps;
 
         /// <summary>
-        /// Initializes a new instance of the MultiConverterGroup class.
+        /// Steps.
         /// </summary>
-        public MultiConverterGroup()
-        {
-            this.steps = new Collection<MultiConverterGroupStep>();
-        }
-
+        private readonly Collection<MultiConverterGroupStep> steps;
+        #endregion
+        #region Properties
         /// <summary>
         /// Gets the collection of <see cref="MultiConverterGroupStep"/>s in this <c>MultiConverterGroup</c>.
         /// </summary>
@@ -76,7 +76,19 @@ namespace Kent.Boogaart.Converters
         {
             get { return this.steps; }
         }
+        #endregion
 
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the MultiConverterGroup class.
+        /// </summary>
+        public MultiConverterGroup()
+        {
+            this.steps = new Collection<MultiConverterGroupStep>();
+        }
+        #endregion
+
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified values.
         /// </summary>
@@ -159,7 +171,6 @@ namespace Kent.Boogaart.Converters
 
             return stepValues;
         }
+        #endregion
     }
 }
-
-#endif

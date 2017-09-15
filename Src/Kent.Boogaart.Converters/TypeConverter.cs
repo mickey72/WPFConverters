@@ -1,13 +1,13 @@
+using Kent.Boogaart.HelperTrinity;
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
+
 namespace Kent.Boogaart.Converters
 {
-    using Kent.Boogaart.HelperTrinity;
-    using System;
-    using System.ComponentModel;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that attempts to convert values between specified <see cref="Type"/>s.
     /// </summary>
@@ -35,15 +35,48 @@ namespace Kent.Boogaart.Converters
     /// ]]>
     /// </code>
     /// </example>
-#if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
-#endif
     public class TypeConverter : IValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// Exception helper.
+        /// </summary>
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(TypeConverter));
-        private Type sourceType;
-        private Type targetType;
 
+        /// <summary>
+        /// Source type.
+        /// </summary>
+        private Type sourceType;
+
+        /// <summary>
+        /// Target type.
+        /// </summary>
+        private Type targetType;
+        #endregion
+        #region Properties
+        /// <summary>
+        /// Gets or sets the source type for the conversion.
+        /// </summary>
+        [ConstructorArgument("sourceType")]
+        public Type SourceType
+        {
+            get { return this.sourceType; }
+            set { this.sourceType = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the target type for the conversion.
+        /// </summary>
+        [ConstructorArgument("targetType")]
+        public Type TargetType
+        {
+            get { return this.targetType; }
+            set { this.targetType = value; }
+        }
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the TypeConverter class.
         /// </summary>
@@ -65,31 +98,9 @@ namespace Kent.Boogaart.Converters
             this.SourceType = sourceType;
             this.TargetType = targetType;
         }
+        #endregion
 
-        /// <summary>
-        /// Gets or sets the source type for the conversion.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("sourceType")]
-#endif
-        public Type SourceType
-        {
-            get { return this.sourceType; }
-            set { this.sourceType = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the target type for the conversion.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("targetType")]
-#endif
-        public Type TargetType
-        {
-            get { return this.targetType; }
-            set { this.targetType = value; }
-        }
-
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified value.
         /// </summary>
@@ -151,7 +162,6 @@ namespace Kent.Boogaart.Converters
                     return DependencyProperty.UnsetValue;
                 }
             }
-#if !SILVERLIGHT
             else
             {
                 var typeConverter = TypeDescriptor.GetConverter(value);
@@ -161,9 +171,9 @@ namespace Kent.Boogaart.Converters
                     return typeConverter.ConvertTo(null, culture, value, toType);
                 }
             }
-#endif
 
             return DependencyProperty.UnsetValue;
         }
+        #endregion
     }
 }

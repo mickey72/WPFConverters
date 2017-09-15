@@ -1,11 +1,9 @@
-﻿#if !SILVERLIGHT40
+﻿using Kent.Boogaart.HelperTrinity.Extensions;
+using System;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-    using Kent.Boogaart.HelperTrinity.Extensions;
-    using System;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="DateTimeConverter"/> to be easily created.
     /// </summary>
@@ -54,9 +52,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the source kind for the <see cref="DateTimeConverter"/>.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("sourceKind")]
-#endif
         public DateTimeKind SourceKind
         {
             get
@@ -74,9 +70,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the target kind for the <see cref="DateTimeConverter"/>.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("targetKind")]
-#endif
         public DateTimeKind TargetKind
         {
             get
@@ -146,5 +140,3 @@ namespace Kent.Boogaart.Converters.Markup
         }
     }
 }
-
-#endif

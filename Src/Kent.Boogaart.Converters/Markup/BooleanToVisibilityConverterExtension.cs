@@ -1,11 +1,9 @@
-﻿#if !SILVERLIGHT40
+﻿using System;
+using System.Windows;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="BooleanToVisibilityConverter"/> to be easily created.
     /// </summary>
@@ -25,9 +23,7 @@ namespace Kent.Boogaart.Converters.Markup
     public sealed class BooleanToVisibilityConverterExtension : MarkupExtension
     {
         private bool isReversed;
-#if !SILVERLIGHT
         private bool useHidden;
-#endif
 
         /// <summary>
         /// Initializes a new instance of the BooleanToVisibilityConverterExtension class.
@@ -36,7 +32,6 @@ namespace Kent.Boogaart.Converters.Markup
         {
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Initializes a new instance of the BooleanToVisibilityConverterExtension class.
         /// </summary>
@@ -51,21 +46,17 @@ namespace Kent.Boogaart.Converters.Markup
             this.isReversed = isReversed;
             this.useHidden = useHidden;
         }
-#endif
 
         /// <summary>
         /// Gets or sets a value indicating whether the return values for the <see cref="BooleanToVisibilityConverter"/> should be reversed.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("isReversed")]
-#endif
         public bool IsReversed
         {
             get { return this.isReversed; }
             set { this.isReversed = value; }
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="BooleanToVisibilityConverter"/> should return <see cref="Visibility.Hidden"/> instead
         /// of <see cref="Visibility.Collapsed"/>.
@@ -76,7 +67,6 @@ namespace Kent.Boogaart.Converters.Markup
             get { return this.useHidden; }
             set { this.useHidden = value; }
         }
-#endif
 
         /// <summary>
         /// Provides an instance of <see cref="BooleanToVisibilityConverter"/> based on <see cref="IsReversed"/> and <see cref="UseHidden"/>.
@@ -89,16 +79,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-#if !SILVERLIGHT
             return new BooleanToVisibilityConverter(this.isReversed, this.useHidden);
-#else
-            return new BooleanToVisibilityConverter
-            {
-                IsReversed = this.isReversed
-            };
-#endif
         }
     }
 }
-
-#endif

@@ -1,12 +1,10 @@
-﻿#if !SILVERLIGHT40
+﻿using Kent.Boogaart.HelperTrinity.Extensions;
+using System;
+using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-    using Kent.Boogaart.HelperTrinity.Extensions;
-    using System;
-    using System.Windows.Controls;
-    using System.Windows.Markup;
-
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="CaseConverter"/> to be easily created.
     /// </summary>
@@ -63,9 +61,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the source <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("sourceCasing")]
-#endif
         public CharacterCasing SourceCasing
         {
             get
@@ -83,9 +79,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the target <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
         /// </summary>
-#if !SILVERLIGHT
         [ConstructorArgument("targetCasing")]
-#endif
         public CharacterCasing TargetCasing
         {
             get
@@ -128,5 +122,3 @@ namespace Kent.Boogaart.Converters.Markup
         }
     }
 }
-
-#endif

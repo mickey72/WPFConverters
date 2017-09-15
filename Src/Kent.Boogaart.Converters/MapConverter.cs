@@ -1,13 +1,13 @@
+using Kent.Boogaart.HelperTrinity.Extensions;
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
+
 namespace Kent.Boogaart.Converters
 {
-    using Kent.Boogaart.HelperTrinity.Extensions;
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that converts from one set of values to another based on the contents of the
     /// <see cref="Mappings"/> collection.
@@ -18,13 +18,12 @@ namespace Kent.Boogaart.Converters
     /// <see cref="Mapping"/> inside the <see cref="Mappings"/> collection. 
     /// </para>
     /// <para>
-    /// If this converter is asked to convert a value for which it has no knowledge, it will use the <see cref="FallbackBehavior"/> to determine
-    /// how to deal with the situation.
+    /// If this converter is asked to convert a value for which it has no knowledge, it will use the <see cref="FallbackBehavior"/> to 
+    /// determine how to deal with the situation.
     /// </para>
     /// </remarks>
     /// <example>
-    /// The following example shows a <c>MapConverter</c> being used to control the visibility of a <c>Label</c> based on a
-    /// <c>CheckBox</c>:
+    /// The following example shows a <c>MapConverter</c> being used to control the visibility of a <c>Label</c> based on a <c>CheckBox</c>:
     /// <code lang="xml">
     /// <![CDATA[
     /// <CheckBox x:Name="_checkBox"/>
@@ -68,23 +67,26 @@ namespace Kent.Boogaart.Converters
     /// </code>
     /// </example>
     [ContentProperty("Mappings")]
-#if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
-#endif
     public class MapConverter : IValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// Mapping.
+        /// </summary>
         private readonly Collection<Mapping> mappings;
-        private FallbackBehavior fallbackBehavior;
-        private object fallbackValue;
 
         /// <summary>
-        /// Initializes a new instance of the MapConverter class.
+        /// Fallback behavior.
         /// </summary>
-        public MapConverter()
-        {
-            this.mappings = new Collection<Mapping>();
-        }
+        private FallbackBehavior fallbackBehavior;
 
+        /// <summary>
+        /// Fallback value.
+        /// </summary>
+        private object fallbackValue;
+        #endregion
+        #region Properties
         /// <summary>
         /// Gets or sets the fallback behavior for this <c>MapConverter</c>.
         /// </summary>
@@ -138,7 +140,19 @@ namespace Kent.Boogaart.Converters
         {
             get { return this.mappings; }
         }
+        #endregion
 
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the MapConverter class.
+        /// </summary>
+        public MapConverter()
+        {
+            this.mappings = new Collection<Mapping>();
+        }
+        #endregion
+
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified value.
         /// </summary>
@@ -222,5 +236,6 @@ namespace Kent.Boogaart.Converters
                 return this.FallbackValue;
             }
         }
+        #endregion
     }
 }

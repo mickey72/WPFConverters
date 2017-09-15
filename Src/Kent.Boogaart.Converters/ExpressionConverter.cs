@@ -1,15 +1,15 @@
+using Kent.Boogaart.Converters.Expressions;
+using Kent.Boogaart.Converters.Expressions.Nodes;
+using Kent.Boogaart.HelperTrinity;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
+
 namespace Kent.Boogaart.Converters
 {
-    using Kent.Boogaart.Converters.Expressions;
-    using Kent.Boogaart.Converters.Expressions.Nodes;
-    using Kent.Boogaart.HelperTrinity;
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> that converts bound values by using
     /// a C#-like expression.
@@ -209,18 +209,46 @@ namespace Kent.Boogaart.Converters
     /// </code>
     /// </example>
     [ContentProperty("Expression")]
-#if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
-#endif
-    public sealed class ExpressionConverter : IValueConverter
-#if !SILVERLIGHT
-, IMultiValueConverter
-#endif
+    public sealed class ExpressionConverter : IValueConverter, IMultiValueConverter
     {
+        #region Fields
+        /// <summary>
+        /// Exception helper.
+        /// </summary>
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ExpressionConverter));
-        private string expression;
-        private Node expressionNode;
 
+        /// <summary>
+        /// The expression.
+        /// </summary>
+        private string expression;
+
+        /// <summary>
+        /// The expression node.
+        /// </summary>
+        private Node expressionNode;
+        #endregion
+        #region Properties
+        /// <summary>
+        /// Gets or sets the expression for this <c>MathConverter</c>.
+        /// </summary>
+        [ConstructorArgument("expression")]
+        public string Expression
+        {
+            get
+            {
+                return this.expression;
+            }
+
+            set
+            {
+                this.expression = value;
+                this.expressionNode = null;
+            }
+        }
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the ExpressionConverter class.
         /// </summary>
@@ -238,27 +266,9 @@ namespace Kent.Boogaart.Converters
         {
             this.Expression = expression;
         }
+        #endregion
 
-        /// <summary>
-        /// Gets or sets the expression for this <c>MathConverter</c>.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("expression")]
-#endif
-        public string Expression
-        {
-            get
-            {
-                return this.expression;
-            }
-
-            set
-            {
-                this.expression = value;
-                this.expressionNode = null;
-            }
-        }
-
+        #region Conversion methods
         /// <summary>
         /// Attempts to convert the specified value.
         /// </summary>
@@ -307,7 +317,6 @@ namespace Kent.Boogaart.Converters
             return DependencyProperty.UnsetValue;
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Attempts to convert the specified values.
         /// </summary>
@@ -355,7 +364,6 @@ namespace Kent.Boogaart.Converters
         {
             return null;
         }
-#endif
 
         // turn the expression into an AST each time it changes (not each time our Convert methods are called)
         private void EnsureExpressionNode()
@@ -372,5 +380,6 @@ namespace Kent.Boogaart.Converters
                 this.expressionNode = parser.ParseExpression();
             }
         }
+        #endregion
     }
 }
