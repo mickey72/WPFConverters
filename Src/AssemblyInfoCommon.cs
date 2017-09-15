@@ -3,14 +3,14 @@ using System;
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyVersionAttribute("1.3.1.0")]
-[assembly: AssemblyFileVersionAttribute("1.3.1.0")]
+[assembly: AssemblyVersionAttribute("2.0.0.0")]
+[assembly: AssemblyFileVersionAttribute("2.0.0.0")]
 [assembly: AssemblyConfigurationAttribute("Release")]
-[assembly: AssemblyCompanyAttribute("Kent Boogaart")]
+[assembly: AssemblyCompanyAttribute("stef")]
 [assembly: AssemblyProductAttribute("WPF Converters")]
-[assembly: AssemblyCopyrightAttribute("© Copyright. Kent Boogaart.")]
+[assembly: AssemblyCopyrightAttribute("© Copyright. stefv")]
 [assembly: AssemblyTrademarkAttribute("")]
 [assembly: AssemblyCultureAttribute("")]
 [assembly: CLSCompliantAttribute(true)]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
-[assembly: AssemblyInformationalVersionAttribute("1.3.1")]
+[assembly: AssemblyInformationalVersionAttribute("2.0.0")]

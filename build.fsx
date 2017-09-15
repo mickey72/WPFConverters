@@ -9,7 +9,7 @@ open Fake.NuGetHelper
 open Fake.XUnitHelper
 
 // properties
-let semanticVersion = "1.3.1"
+let semanticVersion = "2.0.0"
 let version = (>=>) @"(?<major>\d*)\.(?<minor>\d*)\.(?<build>\d*).*?" "${major}.${minor}.${build}.0" semanticVersion
 let configuration = getBuildParamOrDefault "configuration" "Release"
 let deployToNuGet = getBuildParamOrDefault "deployToNuGet" "false"
@@ -23,8 +23,6 @@ type Platform = { ConfigurationPrefix: string; NuGetName: string }
 
 let platforms =
     [
-        { ConfigurationPrefix = "SL40 "; NuGetName = "sl40" };
-        { ConfigurationPrefix = "SL50 "; NuGetName = "sl50" };
         { ConfigurationPrefix = "FX35 "; NuGetName = "net35" };
         { ConfigurationPrefix = "FX40 "; NuGetName = "net40" };
         { ConfigurationPrefix = "FX45 "; NuGetName = "net45" }
@@ -50,9 +48,9 @@ Target "Build" (fun _ ->
             Attribute.Version version
             Attribute.FileVersion version
             Attribute.Configuration configuration
-            Attribute.Company "Kent Boogaart"
+            Attribute.Company "stef"
             Attribute.Product "WPF Converters"
-            Attribute.Copyright "© Copyright. Kent Boogaart."
+            Attribute.Copyright "© Copyright. stefv"
             Attribute.Trademark ""
             Attribute.Culture ""
             Attribute.CLSCompliant true
@@ -140,7 +138,7 @@ Target "CreateNuGetPackages" (fun _ ->
 // build order
 "Clean"
     ==> "Build"
-    ==> "ExecuteUnitTests"
+    //==> "ExecuteUnitTests"
     ==> "CreateArchives"
     ==> "CreateNuGetPackages"
 

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Kent.Boogaart.Converters</RootNamespace>
-    <AssemblyName>Kent.Boogaart.Converters</AssemblyName>
+    <AssemblyName>Kent.Boogaart.Converters.Stefv</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Kent.Boogaart.snk</AssemblyOriginatorKeyFile>
     <NoWarn>0419;1574</NoWarn>
